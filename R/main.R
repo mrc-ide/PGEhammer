@@ -14,7 +14,7 @@
 square <- function(x = 1:5) {
 
   # print message to console
-  message("running R square function!")
+  message("running R square function")
 
   # do something
   ret <- x^2

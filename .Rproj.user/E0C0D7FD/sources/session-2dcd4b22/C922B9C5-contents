@@ -12,13 +12,16 @@
 #' square(1:100)
 
 square <- function(x = 1:5) {
-
+  
+  # check inputs
+  assert_non_null(x)
+  
   # print message to console
   message("running R square function")
-
+  
   # do something
   ret <- x^2
-
+  
   # return
   return(ret)
 }

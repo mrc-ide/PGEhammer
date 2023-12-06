@@ -1,0 +1,16 @@
+Package: PGEhammer
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Authors@R: as.person(c(
+    "Bob Verity <r.verity@imperial.ac.uk> [aut, cre]",
+    "Shazia Ruybal <s.ruybal@imperial.ac.uk> [aut]"
+  ))
+Description: A series of utility functions that improve the experience of
+    working with other software tools in Plasmodium genomic epidemiology. This
+    includes functions for wrangling data and visualising outputs. Part of the
+    PGEforge set of resources.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3

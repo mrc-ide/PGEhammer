@@ -1,6 +1,8 @@
   <!-- badges: start -->
-  [![R-CMD-check](https://github.com/mrc-ide/PGEhammer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mrc-ide/PGEhammer/actions/workflows/R-CMD-check.yaml)
+  [![master checks](https://github.com/mrc-ide/PGEhammer/actions/workflows/checks_master.yaml/badge.svg)](https://github.com/mrc-ide/PGEhammer/actions/workflows/checks_master.yaml)
+  [![develop checks](https://github.com/mrc-ide/PGEhammer/actions/workflows/checks_develop.yaml/badge.svg)](https://github.com/mrc-ide/PGEhammer/actions/workflows/checks_develop.yaml)
   <!-- badges: end -->
 
 # PGEhammer
-A series of utility functions that improve the experience of working with other software tools in Plasmodium genomic epidemiology. This includes functions for wrangling data and visualising outputs. Part of the PGEforge set of resources.
+
+A series of utility functions that improve the experience of working with other software tools in Plasmodium genomic epidemiology. This includes functions for wrangling data and visualising outputs. Part of the [PGEforge](https://github.com/mrc-ide/PGEforge) set of resources.

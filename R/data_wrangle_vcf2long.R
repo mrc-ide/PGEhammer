@@ -1,28 +1,52 @@
 #------------------------------------------------
-#' @title Square a vector of values
+#' @title Convert vcf to long format
 #'
-#' @description Simple test function that demonstrates some of the features of
-#'   this package by squaring an input vector of values.
+#' @description Convert a vcf into a long format data frame with sample ID, locus, alleles and read counts for each allele. 
 #'
-#' @param x object of class vcfR.
+#' @param x object of class vcfR
 #'
-#' @importFrom vcfR addID
+#' @importFrom vcfR extract.gt
 #' @export
 #' @examples
-#' # Find square of first 100 values
-#' square(1:100)
+#' 
 
-vcf2long <- function(x) {
+vcf2long <- function(vcf = NULL) {
   
   # check inputs
-  assert_class(x, "vcfR")
+  assert_class(vcf, "vcfR")
   
   # print message to console
-  message("running R square function")
+  message("Converting from vcf to long format...")
   
-  # do something
-  ret <- x^2
+  # extract allele counts
+  ad <- t(vcfR::extract.gt(vcf, element = 'AD'))
   
-  # return
-  return(ret)
+  # make df and into long format
+  counts_df <- ad %>% 
+    as.data.frame() %>% 
+    rownames_to_column("sample_id") %>% 
+    pivot_longer(cols = -sample_id, names_to = "locus", values_to = "read_count")
+  
+  # unnest read_count
+  long_df <- counts_df %>%
+    rowwise() %>%
+    # split all read count values
+    mutate(read_count = list(str_split(read_count, ",")[[1]])) %>%
+    unnest(cols = read_count) %>% 
+    group_by(sample_id, locus) %>% 
+    # create new variable 'allele'
+    mutate(allele = paste0("allele-", rep(1:n()))) %>% 
+    relocate(allele, .before = read_count)
+
+  message("Reformatting complete.")
+  
+  # Check if any loci are not biallelic and record how many
+  n_not_biallelic <- length(which(!is.biallelic(vcf)))
+  
+  # If the vcf is not biallelic, display a warning message
+  if(n_not_biallelic > 0){
+  warning("Your vcf is not all bi-allelic. Make sure to double check if this is not expected.")
+  }
+  
+  return(long_df)
 }

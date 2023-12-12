@@ -3,9 +3,14 @@
 #'
 #' @description Convert a vcf into a long format data frame with sample ID, locus, alleles and read counts for each allele. 
 #'
-#' @param x object of class vcfR
+#' @param vcf object of class vcfR
 #'
-#' @importFrom vcfR extract.gt
+#' @importFrom vcfR extract.gt is.biallelic
+#' @importFrom tibble rownames_to_column 
+#' @importFrom tidyr pivot_longer unnest
+#' @importFrom dplyr rowwise mutate group_by relocate n
+#' @importFrom stringr str_split
+#' @importFrom rlang .data
 #' @export
 #' @examples
 #' 
@@ -19,24 +24,24 @@ vcf2long <- function(vcf = NULL) {
   message("Converting from vcf to long format...")
   
   # extract allele counts
-  ad <- t(vcfR::extract.gt(vcf, element = 'AD'))
+  ad <- t(extract.gt(vcf, element = 'AD'))
   
   # make df and into long format
-  counts_df <- ad %>% 
-    as.data.frame() %>% 
-    rownames_to_column("sample_id") %>% 
-    pivot_longer(cols = -sample_id, names_to = "locus", values_to = "read_count")
+  counts_df <- ad |> 
+    as.data.frame() |> 
+    rownames_to_column("sample_id") |> 
+    pivot_longer(cols = -.data$sample_id, names_to = "locus", values_to = "read_count")
   
   # unnest read_count
-  long_df <- counts_df %>%
-    rowwise() %>%
+  long_df <- counts_df |>
+    rowwise() |>
     # split all read count values
-    mutate(read_count = list(str_split(read_count, ",")[[1]])) %>%
-    unnest(cols = read_count) %>% 
-    group_by(sample_id, locus) %>% 
+    mutate(read_count = list(str_split(.data$read_count, ",")[[1]])) |>
+    unnest(cols = .data$read_count) |> 
+    group_by(.data$sample_id, .data$locus) |> 
     # create new variable 'allele'
-    mutate(allele = paste0("allele-", rep(1:n()))) %>% 
-    relocate(allele, .before = read_count)
+    mutate(allele = paste0("allele-", rep(1:n()))) |> 
+    relocate(.data$allele, .before = .data$read_count)
 
   message("Reformatting complete.")
   

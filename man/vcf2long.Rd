@@ -2,18 +2,13 @@
 % Please edit documentation in R/data_wrangle_vcf2long.R
 \name{vcf2long}
 \alias{vcf2long}
-\title{Square a vector of values}
+\title{Convert vcf to long format}
 \usage{
-vcf2long(x)
+vcf2long(vcf = NULL)
 }
 \arguments{
-\item{x}{object of class vcfR.}
+\item{vcf}{object of class vcfR}
 }
 \description{
-Simple test function that demonstrates some of the features of
-  this package by squaring an input vector of values.
-}
-\examples{
-# Find square of first 100 values
-square(1:100)
+Convert a vcf into a long format data frame with sample ID, locus, alleles and read counts for each allele.
 }

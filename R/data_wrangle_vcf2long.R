@@ -15,7 +15,7 @@
 #' @examples
 #' 
 
-vcf2long <- function(vcf = NULL) {
+vcf2long <- function(vcf) {
   
   # check inputs
   assert_class(vcf, "vcfR")

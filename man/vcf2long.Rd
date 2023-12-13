@@ -4,7 +4,7 @@
 \alias{vcf2long}
 \title{Convert vcf to long format}
 \usage{
-vcf2long(vcf = NULL)
+vcf2long(vcf)
 }
 \arguments{
 \item{vcf}{object of class vcfR}

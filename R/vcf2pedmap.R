@@ -8,8 +8,8 @@
 #' @param ped_file file path to the output of ped file
 #' @param map_file file path to the output of map file
 #'
-#' @importFrom SeqArray
-#' @importFrom dplyr
+#' @importFrom SeqArray seqOpen seqGetData 
+#' @importFrom dplyr group_by arrange mutate
 #' @export
 #' @examples
 #' #vcf_to_gds("SpotMalariapfPanel_simData_snponly_sanger100.vcf.gz", "SpotMalariapfPanel_simData_snponly_sanger100.gds")  

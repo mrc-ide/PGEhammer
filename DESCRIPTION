@@ -1,6 +1,6 @@
 Package: PGEhammer
 Type: Package
-Title: What the Package Does (Title Case)
+Title: convert vcf to gds and create pedmap
 Version: 0.1.0
 Authors@R: as.person(c(
     "Bob Verity <r.verity@imperial.ac.uk> [aut, cre]",
@@ -19,4 +19,5 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports:
-    SeqArray
+    SeqArray,
+    dplyr

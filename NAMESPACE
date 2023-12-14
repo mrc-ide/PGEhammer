@@ -2,8 +2,8 @@
 
 export(vcf_to_gds)
 export(gds_to_pedmap)
-importFrom("stats", "na.omit")
-importFrom("utils", "write.table")
-importFrom("SeqArray", "seqOpen")
-importFrom("SeqArray", "seqGetData")
-importFrom("SeqArray", "seqVCF2GDS")
+importFrom(stats, na.omit)
+importFrom(utils, write.table)
+importFrom(SeqArray, seqOpen)
+importFrom(SeqArray, seqGetData)
+importFrom(SeqArray, seqVCF2GDS)

@@ -9,10 +9,11 @@
 #' @param map_file file path to the output of map file
 #'
 #' @importFrom SeqArray
+#' @importFrom dplyr
 #' @export
 #' @examples
-#' #vcf_to_gds("../SpotMalariapfPanel_simData_snponly_sanger100.vcf.gz", "../SpotMalariapfPanel_simData_snponly_sanger100.gds")  
-#' #gds_to_pedmap("../SpotMalariapfPanel_simData_snponly_sanger100.gds", "my_map.map", "my_ped.ped")
+#' #vcf_to_gds("SpotMalariapfPanel_simData_snponly_sanger100.vcf.gz", "SpotMalariapfPanel_simData_snponly_sanger100.gds")  
+#' #gds_to_pedmap("SpotMalariapfPanel_simData_snponly_sanger100.gds", "my_map.map", "my_ped.ped")
 
 globalVariables(c("%>%", "group_by", "chr", "pos", "summarise", "variant_id", "arrange", "mutate", "cM"))
 
@@ -57,14 +58,12 @@ gds_to_pedmap <- function(gds_file, ped_file, map_file) {
   ## construct a map file
   my_map <- variants[allele_count<=2,] %>% mutate(cM=pos/17000) %>%
     dplyr::select(chr, variant_id, cM, pos)
-  my_map <- na.omit(my_map)
   
   ## write a map file corresponding to biallelic snps
   write.table(my_map, file=map_file, row.names=FALSE, col.names = FALSE, sep="\t", quote=FALSE)
   
   ## write a ped file encoding genotypes at biallelic snps
   for (sample in samples) {
-    cat(paste0("Country\t", sample, "\t0\t0\t1\t0\t", paste(rep(biallelic[sample,], each=2), collapse="\t"), "\n"), file=ped_file, append=TRUE)
+    cat(paste0(sample,"\t", sample, "\t0\t0\t1\t0\t", paste(rep(biallelic[sample,], each=2), collapse="\t"), "\n"), file=ped_file, append=TRUE)
   }
-  
 }

@@ -12,6 +12,7 @@
 #' @importFrom dplyr group_by arrange mutate
 #' @export
 #' @examples
+#' @name vcf2pedmap
 #' #vcf_to_gds("SpotMalariapfPanel_simData_snponly_sanger100.vcf.gz", "SpotMalariapfPanel_simData_snponly_sanger100.gds")  
 #' #gds_to_pedmap("SpotMalariapfPanel_simData_snponly_sanger100.gds", "my_map.map", "my_ped.ped")
 

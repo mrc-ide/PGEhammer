@@ -8,7 +8,7 @@
 #' @importFrom vcfR extract.gt is.biallelic
 #' @importFrom tibble rownames_to_column 
 #' @importFrom tidyr pivot_longer unnest
-#' @importFrom dplyr rowwise mutate group_by relocate n
+#' @importFrom dplyr rowwise mutate group_by relocate n ungroup
 #' @importFrom stringr str_split
 #' @importFrom rlang .data
 #' @export
@@ -38,9 +38,12 @@ vcf2long <- function(vcf) {
     # split all read count values
     mutate(read_count = list(str_split(.data$read_count, ",")[[1]])) |>
     unnest(cols = .data$read_count) |> 
+    # make read_count numeric
+    mutate(read_count = as.numeric(.data$read_count)) |>
     group_by(.data$sample_id, .data$locus) |> 
-    # create new variable 'allele'
+    # create new variable 'allele' and make read_count numeric
     mutate(allele = paste0("allele-", rep(1:n()))) |> 
+    ungroup() |>
     relocate(.data$allele, .before = .data$read_count)
 
   message("Reformatting complete.")

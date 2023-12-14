@@ -25,7 +25,6 @@ vcf_to_gds <- function(vcf_file, gds_file) {
 }
 
 gds_to_pedmap <- function(gds_file, ped_file, map_file) {
-  showfile.gds(closeall = TRUE)
   snp_data <- seqOpen(gds_file, readonly = TRUE)
   variants <- data.frame(variant_id = seqGetData(snp_data, "variant.id"),
                          chr = seqGetData(snp_data, "chromosome"),
